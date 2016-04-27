@@ -42,4 +42,4 @@ conn.exec("CREATE TABLE comments(
 conn.exec_params("INSERT INTO users (username, email) VALUES (
     $1,$2)", ['alliesauce', 'alli.cummings@gmail.com'])
 
-conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Biana', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])
+conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Bianca', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])

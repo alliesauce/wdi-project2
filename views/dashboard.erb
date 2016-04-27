@@ -1,0 +1,7 @@
+<% @restaurants.each do |place| %>
+  <h1><%= place["restaurant_name"] %></h1>
+  <h2><%= place["menu_item"] %></h2>
+  <p class='review'><%= place["review"] %></p>
+  <p class='author'><%= place["user_id"] %></p>
+<% end %>
+

@@ -17,7 +17,9 @@ module Sinatra
     end
 
     get "/dashboard" do
-      erb :index
+      @id = params[:id]
+      @restaurants = conn.exec('SELECT * FROM restaurants')
+      erb :dashboard
     end
 
     get "/review/:id" do
