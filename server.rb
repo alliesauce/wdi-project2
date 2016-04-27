@@ -65,7 +65,7 @@ module Sinatra
           user: ENV["POSTGRES_USER"]
         )
       else
-        PG.connect(dbname: "portfolio")
+        PG.connect(dbname: "mealpass_reviews")
       end
     end #end def conn
   end #end class Server
