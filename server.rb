@@ -1,5 +1,6 @@
 module Sinatra
   require 'bcrypt'
+  require 'pry'
 
   class Server < Sinatra::Base
     enable :sessions
@@ -67,13 +68,15 @@ module Sinatra
     end
 
     get "/dashboard" do
-      @id = params[:id]
+      @id = params[:id].to_i
       @restaurants = conn.exec('SELECT * FROM restaurants')
       erb :dashboard
     end
 
     get "/review/:id" do
-
+      @id = params[:id].to_i
+      @restaurant = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
+      @comments = conn.exec("SELECT * FROM comments WHERE restaurant_id = #{@id}")
       erb :restaurant
     end
 
@@ -95,7 +98,12 @@ module Sinatra
     end
 
     post "/comment" do
-      erb :index
+      @comment = params[:comment]
+      @restaurant_id = params[:restaurant_id].to_i
+      @user_id = params[:user_id].to_i
+      conn.exec_params(
+        "INSERT INTO comments (comment, restaurant_id, user_id) VALUES ($1, $2, $3) RETURNING id", [@comment, @restaurant_id, @user_id])
+
     end
 
     put "/comment/:id" do

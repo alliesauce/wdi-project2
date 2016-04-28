@@ -1,19 +1,39 @@
-<div class='full_box'>
-  <% @username = conn.exec_params(
-        "SELECT username FROM users WHERE id=$1",
-        [place["id"]]
-      ).first
-  <% @restaurants.each do |place| %>
-    <h2><%= place["restaurant_name"] %></h2>
-    <h2><em><%= place["menu_item"] %></em></h2>
-    <p class='review'><%= place["review"] %></p>
-    <p class='author'>
+<div class='half_box1'>
+  <% @restaurant.each do |place| %>
+    <h2><%= place ["restaurant_name"] %></h2>
+    <h3><%= place ["menu_item"] %></h3><br />
+      <ul class='restos'>
+        <li><%= place ["review"] %></li>
+        <li><%= place ["user_id"] %></li>
+        <li>tag placeholder</li>
+        <li>votes placeholder</li>
+      </ul>
 
-
-
-      <% @author = conn.exec("SELECT username FROM users WHERE place["user_id"] %>
-
-      <% end %>
-    </p>
   <% end %>
 </div>
+<div class='half_box2'>
+<h2>Comments</h2> <br />
+  <% @comments.each do |comm| %>
+  <ul class='restos'>
+    <li><%= comm ["comment"] %>, <em><%= comm ["user_id"] %></em></li>
+  </ul>
+  <% end %>
+  <h2>Add your review to this menu item: </h2> <br />
+    <div class='box'>
+      <form class='comment' action='/comment' method='post'>
+        <label for='comment'>Review: </label>
+        <input name='comment' type='text' />
+        <br />
+        <label for='restaurant_id'>Restaurant ID: </label>
+        <input name='restaurant_id' type='text' />
+        <br />
+        <label for='user_id'>User ID: </label>
+        <input name='user_id' type='text' />
+        <br />
+        <input type='submit' value='Submit' />
+      </form>
+    </div>
+</div>
+
+
+
