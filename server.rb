@@ -26,6 +26,10 @@ module Sinatra
       erb :index
     end
 
+    get "/contact" do
+      erb :contact
+    end
+
     get "/signup" do
       erb :signup
     end
@@ -73,7 +77,16 @@ module Sinatra
     end
 
     post "/review" do
-      erb :index
+      @restaurant_name = params[:restaurant_name]
+      @menu_item = params[:menu_item]
+      @review = params[:review]
+      @user_id = params[:user_id].to_i
+      @tag_id = params[:tag_id].to_i
+      conn.exec_params(
+        "INSERT INTO restaurants (restaurant_name, menu_item, review, user_id, tag_id)
+        VALUES ($1, $2, $3, $4, $5)",
+        [@restaurant_name, @menu_item, @review, @user_id, @tag_id])
+      redirect "/dashboard"
     end
 
     put "/review/:id" do

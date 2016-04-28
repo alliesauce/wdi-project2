@@ -1,7 +1,39 @@
-<% @restaurants.each do |place| %>
-  <h1><%= place["restaurant_name"] %></h1>
-  <h2><%= place["menu_item"] %></h2>
-  <p class='review'><%= place["review"] %></p>
-  <p class='author'><%= place["user_id"] %></p>
-<% end %>
+<div class='half_box1'>
+  <% @restaurants.each do |place| %>
+    <ul>
+      <li><%= place["restaurant_name"] %>, <em><%= place["menu_item"] %></em>, likes (x)
+        <ul>
+          <li>tag1</li>
+          <li>tag2</li>
+        </ul>
+      </li>
+    </ul>
+  <% end %>
+</div>
+
+<div class='half_box2'>
+  <h1>Review a new restaurant: </h1>
+    <form class='review' action='/review' method='post'>
+    <label for='restaurant_name'>Restaurant Name: </label>
+    <input name='restaurant_name' type='text' />
+    <br />
+    <label for='menu_item'>Menu Item: </label>
+    <input name='menu_item' type='text' />
+    <br />
+    <label for='review'>Review: </label>
+    <input name='review' type='text' />
+    <br />
+    <label for='user_id'>Username: </label>
+    <input name='user_id' type='text' />
+    <br />
+    <label for='tag_id'>Tag: </label>
+    <input name='tag_id' type='text' />
+    <br />
+
+    <input type='submit' value='Submit' />
+  </form>
+</div>
+
+
+
 
