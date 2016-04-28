@@ -1,5 +1,27 @@
 module Sinatra
+  require 'bcrypt'
+
   class Server < Sinatra::Base
+    enable :sessions
+    include BCrypt
+
+    def current_user
+      @current_user ||= conn.exec_params("SELECT * FROM users WHERE id=$1", [session[:user_id]]).first
+    end
+##
+# def current_user
+#     if session["user_id"]
+#       @user ||= db.exec_params("SELECT * FROM users WHERE id = $1", [session["user_id"]]).first
+#     else
+#       {}
+#     end
+#   end
+
+##
+    def logged_in?
+      @current_user
+    end
+
     get "/" do
       erb :index
     end
@@ -9,23 +31,36 @@ module Sinatra
     end
 
     post "/signup" do
-      username = params[:username]
-      email = params[:email]
-      encrPassword = BCrypt::Password.create(params[:password])
+      @username = params[:username]
+      @email = params[:email]
+      @encrPassword = BCrypt::Password.create(params[:password])
       #add image/avatar thing??
-      @user = db.exec_params("INSERT INTO users (username, email, encrPassword) VALUES ($1,$2,$3) RETURNING id", [username, email, encrPassword])
+      conn.exec_params(
+        "INSERT INTO users (username, email, password) VALUES ($1,$2,$3) RETURNING id", [@username, @email, @encrPassword])
       redirect "/dashboard"
     end
 
     get "/login" do
-      erb :login
+      if logged_in?
+        erb :dashboard
+      else
+        erb :login
+      end
     end
 
     post "/login" do
-      erb :login
+      @username = params[:username]
+      @password = params[:password]
+
+      @user = conn.exec_params("SELECT * FROM users WHERE username=$1 LIMIT 1", [@username]).first
+
+      if @user && BCrypt::Password::new(@user["password"]) == params[:password]
+        session[:user_id] = @user["id"]
+        redirect "/dashboard"
+      else
+        #an alert or page that says incorrect try again#
+      end
     end
-
-
 
     get "/dashboard" do
       @id = params[:id]
