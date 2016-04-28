@@ -15,7 +15,10 @@ div {
 
 h1 {
   display: inline-block;
-  margin-top: 30px;
+  margin-top: 20px;
+  font-size: 34px;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
 }
 
 div.half_box1 {
@@ -62,13 +65,14 @@ div.wrapper {
 
 ul.main_navigation {
   float: right;
+  padding-bottom: 10px;
   margin: 0;
-  margin: 20px 0 0 0;
+  margin: 30px 0 0 0;
 }
 
 ul.main_navigation li {
   display: inline-block;
-  font-size: 20px;
+  font-size: 16px;
   position: relative;
 }
 
@@ -78,8 +82,7 @@ ul.main_navigation a {
   color: darkcyan;
   text-decoration: none;
   display: inline-block;
-  padding: 12px;
-  display: inline-block;
+  padding: 6px;
 }
 
 ul.main_navigation a:hover,
@@ -88,12 +91,12 @@ ul.main_navigation a.hover {
   color: lightcyan;
 }
 
-ul.main_navigation li ul.sub_main_navigation {
+/* ul.main_navigation li ul.sub_main_navigation {
   position: absolute;
   top: 44px;
   background: darkcyan;
   display: none;
-}
+} */
 /* RIGHT COLUMN */
 
 div.right_column {

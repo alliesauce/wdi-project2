@@ -1,0 +1,19 @@
+<div class='full_box'>
+  <% @username = conn.exec_params(
+        "SELECT username FROM users WHERE id=$1",
+        [place["id"]]
+      ).first
+  <% @restaurants.each do |place| %>
+    <h2><%= place["restaurant_name"] %></h2>
+    <h2><em><%= place["menu_item"] %></em></h2>
+    <p class='review'><%= place["review"] %></p>
+    <p class='author'>
+
+
+
+      <% @author = conn.exec("SELECT username FROM users WHERE place["user_id"] %>
+
+      <% end %>
+    </p>
+  <% end %>
+</div>

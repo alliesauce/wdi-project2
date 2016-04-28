@@ -73,7 +73,8 @@ module Sinatra
     end
 
     get "/review/:id" do
-      erb :index
+
+      erb :restaurant
     end
 
     post "/review" do

@@ -1,11 +1,11 @@
 <div class='half_box1'>
   <% @restaurants.each do |place| %>
     <ul>
-      <li><%= place["restaurant_name"] %>, <em><%= place["menu_item"] %></em>, likes (x)
-        <ul>
+      <li><a href="/review/<%= place ["id"] %>"><%= place["restaurant_name"] %></a>, <em><%= place["menu_item"] %></em>, likes (x)
+        <!-- <ul>
           <li>tag1</li>
           <li>tag2</li>
-        </ul>
+        </ul> -->
       </li>
     </ul>
   <% end %>
