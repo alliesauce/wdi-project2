@@ -106,6 +106,13 @@ module Sinatra
 
     end
 
+    put "/like" do
+      @likes = params[:likes].to_i
+      @restaurant_id = params[:restaurant_id].to_i
+      conn.exec("UPDATE restaurants SET likes = likes + 1 WHERE restaurant_id = #{@restaurant_id}")
+      rediect "/review/:id"
+    end
+
     put "/comment/:id" do
       erb :index
     end

@@ -1,4 +1,18 @@
-"use strict";
-(function(){
+// "use strict";
+// (function(){
+//   var likeButton = $('.like');
 
-})();
+//   likeButton.on('click', function() {
+//     var
+
+
+//   })
+
+
+// })();
+
+
+
+
+
+

@@ -36,6 +36,7 @@ conn.exec("CREATE TABLE restaurants(
   restaurant_name VARCHAR(255) NOT NULL,
   menu_item VARCHAR(255) NOT NULL,
   review TEXT NOT NULL,
+  likes INTEGER NOT NULL DEFAULT 0,
   user_id INTEGER REFERENCES users(id),
   tag_id INTEGER REFERENCES tags(id)
 )")
