@@ -1,20 +1,31 @@
 module Sinatra
   class Server < Sinatra::Base
-    get "/" do #get login instead?
+    get "/" do
       erb :index
     end
 
-    get "/login" do
-      erb :index
-    end
-
-    post "/login" do
-      erb :index
+    get "/signup" do
+      erb :signup
     end
 
     post "/signup" do
-      erb :index
+      username = params[:username]
+      email = params[:email]
+      encrPassword = BCrypt::Password.create(params[:password])
+      #add image/avatar thing??
+      @user = db.exec_params("INSERT INTO users (username, email, encrPassword) VALUES ($1,$2,$3) RETURNING id", [username, email, encrPassword])
+      redirect "/dashboard"
     end
+
+    get "/login" do
+      erb :login
+    end
+
+    post "/login" do
+      erb :login
+    end
+
+
 
     get "/dashboard" do
       @id = params[:id]
