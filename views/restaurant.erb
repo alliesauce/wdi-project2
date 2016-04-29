@@ -7,18 +7,16 @@
         <li><%= place ["user_id"] %></li>
         <li>tag placeholder</li>
         <li>
-        #put into a form, with value on edit forms use post, play with text to name link/button
-          <input name='_method' type='submit' value='Submit' />
-          <a data-method="put" href="/like">Like!</a>
+          <form class='like' action='/like' method='post'>
+            <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+            <input name='likes' type='hidden' />
+            <input type='submit' value='Like!' />
+          </form>
         </li>
       </ul>
 
   <% end %>
 </div>
-
-
-
-
 
 <div class='half_box2'>
 <h2>Comments</h2> <br />
@@ -33,9 +31,8 @@
         <label for='comment'>Review: </label>
         <input name='comment' type='text' />
         <br />
-        #put in rest_id as set value, then after you can see it's working, make it hidden.
         <label for='restaurant_id'>Restaurant ID: </label>
-        <input name='restaurant_id' type='text' />
+        <input name='restaurant_id' value='<%= @restaurant_id %>' type='text' />
         <br />
         <label for='user_id'>User ID: </label>
         <input name='user_id' type='text' />

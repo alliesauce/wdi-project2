@@ -1,6 +1,7 @@
 module Sinatra
   require 'bcrypt'
   require 'pry'
+  require 'redcarpet'
 
   class Server < Sinatra::Base
     enable :sessions
@@ -33,6 +34,13 @@ module Sinatra
 
     get "/signup" do
       erb :signup
+    end
+
+    def markdown
+      renderer = Redcarpet::Render::HTML
+      # Initializes a Markdown parser
+      markdown = Redcarpet::Markdown.new(renderer, extensions = {})
+      @content = markdown.render(@article["content"])
     end
 
     post "/signup" do
@@ -71,12 +79,15 @@ module Sinatra
       @id = params[:id].to_i
       @restaurants = conn.exec('SELECT * FROM restaurants')
       erb :dashboard
+
     end
 
     get "/review/:id" do
       @id = params[:id].to_i
       @restaurant = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
       @comments = conn.exec("SELECT * FROM comments WHERE restaurant_id = #{@id}")
+
+      @restaurant_id = @restaurant.to_a[0]['id']
       erb :restaurant
     end
 
@@ -106,7 +117,8 @@ module Sinatra
 
     end
 
-    put "/like" do
+    post "/like" do
+      "hello world"
       @likes = params[:likes].to_i
       @restaurant_id = params[:restaurant_id].to_i
       conn.exec("UPDATE restaurants SET likes = likes + 1 WHERE restaurant_id = #{@restaurant_id}")
