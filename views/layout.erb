@@ -1,44 +1,61 @@
 <!doctype html>
 <html>
 <head>
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/skeleton.css" rel="stylesheet" type="text/css">
   <link href="../css/style.css" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
   <title>MealPass Review Forum</title>
 </head>
-<body>
-  <div class="wrapper">
-    <div class="header clearfix">
-      <h1>MEALPASS REVIEW FORUM</h1>
-      <ul class="main_navigation">
-        <li><a href="/signup">Join</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/dashboard">Restaurants</a></li>
-        <li><a target="_blank" href="https://mealpass.com/">MealPass</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
-
-  <div class="right_column">
-    <div class="faves">
-    </div>
-    <div class="tags">
-    </div>
-  </div>
+<header>
   <div class="container">
-    <%= yield %>
-  </div>
-
-  <div class="footer clearfix">
-      <p>&copy; 2016 Alli Cummings</p>
-      <ul class="footer_navigation">
-        <li><a href="/signup">Join</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/dashboard">Restaurants</a></li>
-        <li><a target="_blank" href="https://mealpass.com/">MealPass</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
+    <div class="row">
+      <div class="twelve columns">
+        <h1>MEALPASS REVIEW FORUM</h1>
+        <ul class="main_navigation">
+          <li><a href="/signup">Join</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/dashboard">Restaurants</a></li>
+          <li><a target="_blank" href="https://mealpass.com/">MealPass</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
     </div>
+  </div>
+</header>
+
+<body>
+  <div class='container'>
+    <div class="row">
+      <div class="nine columns">
+        <%= yield %>
+      </div>
+      <div class="three columns">
+        <!-- <div class="faves">
+        </div>
+        <div class="tags">
+        </div> -->
+      </div>
+    </div>
+  </div>
 </body>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns">
+        <p>&copy; 2016 Alli Cummings</p>
+        <ul class="footer_navigation">
+          <li><a href="/signup">Join</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/dashboard">Restaurants</a></li>
+          <li><a target="_blank" href="https://mealpass.com/">MealPass</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 </html>
 <script src="../js/jquery.js" type="text/javascript"></script>
 <script src="../js/script.js" type="text/javascript"></script>
