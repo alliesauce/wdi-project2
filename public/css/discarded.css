@@ -1,2 +1,90 @@
 discarded.css
 
+
+/* ul.main_navigation li ul.sub_main_navigation {
+  position: absolute;
+  top: 44px;
+  background: darkcyan;
+  display: none;
+} */
+/* RIGHT COLUMN */
+
+/* div.right_column {
+  position: relative;
+  float: right;
+  width: 250px;
+  height: 526px;
+  border: 3px solid darkcyan;
+} */
+
+
+/* tr, td {
+  border-top: 1px solid darkcyan;
+  padding: 8px;
+}
+
+tr.header {
+  font-size: 18px;
+  font-style: light;
+  background-color: mediumturquoise;
+}
+
+
+tr:hover {
+  background-color: darkcyan;
+  color: lightcyan;
+}
+
+tr:hover a {
+  text-decoration: underline;
+} */
+
+/* div.full_box {
+  border: 3px solid darkcyan;
+  width: 680px;
+  height: 506px;
+  position: relative;
+  margin: 0;
+  float: left;
+  padding: 10px;
+}
+
+ul.restos {
+  position: relative;
+  margin-top: 45px;
+
+}
+
+div.half_box1 {
+  border: 3px solid darkcyan;
+  width: 680px;
+  height: 230px;
+  float: left;
+  position: relative;
+  margin-top: 0;
+  padding: 10px;
+}
+
+div.half_box2 {
+  border: 3px solid darkcyan;
+  width: 680px;
+  height: 230px;
+  float: left;
+  position: relative;
+  margin-top: 20px;
+  padding: 10px;
+
+}
+
+p.author, .review {
+  font-style: italic;
+}
+ */
+
+/* Clearfix */
+/*
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+} */

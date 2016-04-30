@@ -21,7 +21,7 @@ conn.exec("DROP TABLE IF EXISTS users CASCADE")
 
 conn.exec("CREATE TABLE users(
   id SERIAL PRIMARY KEY,
-  username VARCHAR(255) NOT NULL,
+  fname VARCHAR(255) NOT NULL,
   email VARCHAR NOT NULL,
   password VARCHAR NOT NULL
 )")
@@ -49,8 +49,8 @@ conn.exec("CREATE TABLE comments(
   )")
 
 
-conn.exec_params("INSERT INTO users (username, email, password) VALUES (
-    $1,$2,$3)", ['alliesauce', 'alli.cummings@gmail.com', 'p@ssword'])
+conn.exec_params("INSERT INTO users (fname, email, password) VALUES (
+    $1,$2,$3)", ['Alli', 'alli.cummings@gmail.com', 'p@ssword'])
 
 conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Bianca', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])
 
