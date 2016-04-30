@@ -48,11 +48,22 @@ conn.exec("CREATE TABLE comments(
   user_id INTEGER REFERENCES users(id)
   )")
 
+conn.exec("CREATE TABLE contact_data(
+    id SERIAL PRIMARY KEY,
+    fname VARCHAR(255),
+    lname VARCHAR(255),
+    email VARCHAR(255),
+    message TEXT NOT NULL
+  )"
+)
 
+
+#TEST DATA
 conn.exec_params("INSERT INTO users (fname, email, password) VALUES (
     $1,$2,$3)", ['Alli', 'alli.cummings@gmail.com', 'p@ssword'])
 
 conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Bianca', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])
+#################
 
 tags = [
   'healthy',

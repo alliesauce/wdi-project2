@@ -58,6 +58,7 @@ module Sinatra
       @restaurants = conn.exec('SELECT * FROM restaurants')
       if logged_in?
         erb :dashboard
+       binding pry
       else
         erb :login
       end
@@ -125,6 +126,20 @@ module Sinatra
       # @user_id = params[:user_id].to_i
       conn.exec_params(
         "INSERT INTO comments (comment, restaurant_id) VALUES ($1, $2) RETURNING id", [@comment, @restaurant_id])
+    end
+
+    #SUBMITTING A CONTACT REQUEST
+    post "/contact" do
+      @fname = params[:fname]
+      @lname = params[:lname]
+      @email = params[:email]
+      @message = params[:message]
+
+      conn.exec_params("INSERT INTO contact_data (fname, lname, email, message) VALUES ($1,$2,$3, $4)", [@fname, @lname, @email, @message])
+
+      @submitted = true
+
+      erb :contact
     end
 
     #LIKING, or upvoting, a restaurant ("topic")

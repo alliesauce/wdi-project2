@@ -1,7 +1,12 @@
 <div class='half_box1'>
   <% @restaurants.each do |place| %>
     <ul>
-      <li><a href="/review/<%= place ["id"] %>"><%= place["restaurant_name"] %></a>, <em><%= place["menu_item"] %></em>, likes (x)
+      <li><a href="/review/<%= place ["id"] %>">
+        <%= place["restaurant_name"] %></a>,
+        <%= place["menu_item"] %>,
+        <em><%= place["current_user"] %> </em>
+
+        , likes (x)
         <!-- <ul>
           <li>tag1</li>
           <li>tag2</li>
@@ -23,7 +28,9 @@
     <label for='review'>Review: </label>
     <input name='review' type='textarea' />
     <br />
-<!--     <label for='user_id'>Username: </label>
+<!--try to set up hidden value of firstname based on current user
+
+<label for='user_id'>Username: </label>
     <input name='user_id' type='text' />
     <br />
     <label for='tag_id'>Tag: </label>
