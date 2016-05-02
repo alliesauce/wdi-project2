@@ -19,25 +19,25 @@
 </div>
 
 <div class='half_box2'>
-<h2>Comments</h2> <br />
+<h2>Comments: </h2><br /><br />
   <% @comments.each do |comm| %>
   <ul class='restos'>
     <li><%= comm ["comment"] %>, <em><%= comm ["user_id"] %></em></li>
   </ul>
   <% end %>
-  <h2>Add your review to this menu item: </h2> <br />
-    <div class='box'>
-      <form class='comment' action='/comment' method='post'>
-        <label for='comment'>Review: </label>
-        <input name='comment' type='text' />
-        <br />
-        <label for='restaurant_id'>Restaurant ID: </label>
-        <input name='restaurant_id' value='<%= @restaurant_id %>' type='text' />
-        <br />
-        <label for='fname'>User ID: </label>
-        <input name='fname' value=' <%= @fname %>' type='text' />
-        <br />
-        <input type='submit' value='Submit' />
+  <div class='box'>
+    <h3>Add your review to this menu item: </h3> <br />
+    <form class='comment' action='/comment' method='post'>
+      <label for='comment'>Comments: </label>
+      <textarea name='comment'></textarea>
+      <br />
+    <!--   <label for='restaurant_id'>Restaurant ID: </label> -->
+      <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+      <br />
+      <!-- <label for='fname'>First Name: </label> -->
+      <input name='fname' value=' <%= @fname %>' type='hidden' />
+      <br />
+      <input type='submit' value='Submit' />
       </form>
     </div>
 </div>

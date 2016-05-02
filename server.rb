@@ -58,7 +58,7 @@ module Sinatra
       @restaurants = conn.exec('SELECT * FROM restaurants')
       if logged_in?
         erb :dashboard
-       binding pry
+       # binding pry
       else
         erb :login
       end
@@ -70,6 +70,8 @@ module Sinatra
       @restaurant = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
       @comments = conn.exec("SELECT * FROM comments WHERE restaurant_id = #{@id}")
       @restaurant_id = @restaurant.to_a[0]['id'].to_i
+      @fname = current_user["fname"]
+      # binding pry
       if logged_in?
         erb :restaurant
       else
@@ -110,22 +112,33 @@ module Sinatra
       @restaurant_name = params[:restaurant_name]
       @menu_item = params[:menu_item]
       @review = params[:review]
-      # @user_id = params[:user_id].to_i
-      # @tag_id = params[:tag_id].to_i
-      conn.exec_params(
+      @user_id = current_user["id"]
+      #trying to get tags to work - not there yet
+      # tags = db.exec_params("SELECT * FROM tags").to_a
+      # @tags = []
+      # tags.each do |tag|
+      #   if params[tag["id"]]
+      #     @tags.push(params[tag["id"]].to_i)
+      #   end
+      # end
+      #help from Marina's project two code on how to redirect to the entry you just made
+      @new_review = conn.exec_params(
         "INSERT INTO restaurants (restaurant_name, menu_item, review)
-        VALUES ($1, $2, $3)",
-        [@restaurant_name, @menu_item, @review])
-      redirect "/dashboard"
+        VALUES ($1, $2, $3) RETURNING id",
+        [@restaurant_name, @menu_item, @review]).first["id"].to_i
+      # binding pry
+      redirect "/review/#{@new_review}"
     end
 
     #SUBMITTING A COMMENT ON A RESTAURANT
     post "/comment" do
       @comment = params[:comment]
       @restaurant_id = params[:restaurant_id].to_i
-      # @user_id = params[:user_id].to_i
-      conn.exec_params(
-        "INSERT INTO comments (comment, restaurant_id) VALUES ($1, $2) RETURNING id", [@comment, @restaurant_id])
+      @user_id = params[:user_id]
+      @new_comment = conn.exec_params(
+        "INSERT INTO comments (comment) VALUES ($1) RETURNING id", [@comment]).first["id"].to_i
+      binding pry
+      redirect "/review/#{@new_comment}"
     end
 
     #SUBMITTING A CONTACT REQUEST
@@ -144,11 +157,12 @@ module Sinatra
 
     #LIKING, or upvoting, a restaurant ("topic")
     post "/like" do
-      "hello world"
+      # binding pry
       @likes = params[:likes].to_i
       @restaurant_id = params[:restaurant_id].to_i
-      conn.exec("UPDATE restaurants SET likes = likes + 1 WHERE restaurant_id = #{@restaurant_id}")
-      rediect "/review/:id"
+      conn.exec_params("UPDATE restaurants SET likes = likes + 1 WHERE id = ($1)", [@restaurant_id])
+      # binding pry
+      redirect "/review/#{@restaurant_id}"
     end
 
     #UNDEFINED ROUTES
