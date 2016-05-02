@@ -65,6 +65,7 @@ module Sinatra
       @restaurants = conn.exec('SELECT * FROM restaurants ORDER BY restaurant_name ASC')
       @restaurants_likes = conn.exec('SELECT * FROM restaurants ORDER BY likes DESC')
       @comments = conn.exec('SELECT * FROM comments')
+      # @restaurants_comments = conn.exect("SELECT COUNT(comment) FROM comments WHERE restaurant_id=#{@id}")
       # binding pry
       # @tags = conn.exec('SELECT * FROM tags')
       if logged_in?

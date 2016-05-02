@@ -1,22 +1,7 @@
 <div class='row'>
   <div class='twelve columns'>
-    <% if logged_in %>
-      <p>Your login information is incorrect. Please try again.</p>
-      <div class="container">
-        <h1>Contact Me</h1>
-        <form class='contact' action='/contact' method='post'>
-          <label for='fname'>First Name: </label>
-          <input name='fname' type='text' />
-          <label for='lname'>Last Name: </label>
-          <input name='lname' type='text' />
-          <label for='email'>Email: </label>
-          <input name='email' type='text' />
-          <label for='message'>Comments: </label>
-          <textarea name='message'></textarea>
-          <br />
-          <input type='submit' value='Send' />
-        </form>
-      </div>
+    <% if @submitted %>
+      <p class='contact_submit'>Thank you for contacting me. I will respond as soon as I can.</p>
     <% else %>
       <div class="container">
         <h1>Contact Me</h1>
