@@ -1,4 +1,4 @@
-<div class='half_box1'>
+<div>
   <% @restaurants.each do |place| %>
     <ul>
       <li><a href="/review/<%= place ["id"] %>">
@@ -16,8 +16,8 @@
   <% end %>
 </div>
 
-<div class='half_box2'>
-  <h1>Review a new restaurant: </h1>
+<div class='box'>
+  <h4>Review a new restaurant or menu item: </h4>
     <form class='review' action='/review' method='post'>
     <label for='restaurant_name'>Restaurant Name: </label>
     <input name='restaurant_name' type='text' />

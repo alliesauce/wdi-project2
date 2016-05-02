@@ -63,3 +63,19 @@ remove_instance_variable  reset
  "tag_id"=>"1"}
 [4] Pry(#<Sinatra::Server>)> @restaurant.to_a[0]['id']
 => "3"
+
+
+
+<ul class='restos'>
+        <li><%= place ["review"] %></li>
+        <li><%= @fname %></li>
+        <li>tag placeholder</li>
+        <li>
+          <form class='like' action='/like' method='post'>
+            <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+            <input name='likes' type='hidden' />
+            <input type='submit' value='Like!' />
+          </form>
+        </li>
+      </ul>
+

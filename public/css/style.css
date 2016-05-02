@@ -1,4 +1,4 @@
-a {
+ a {
   text-decoration: none;
   color: darkcyan;
 }
@@ -17,6 +17,10 @@ div {
   margin-top: 45px;
 } */
 
+div.box {
+  border-top: 3px solid paleturquoise;
+}
+
 h1 {
   display: inline-block;
   margin-top: 20px;
@@ -30,19 +34,32 @@ h2 {
   display: inline-block;
   float: left;
   margin-top: 10px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 
 h3 {
-  font-size: 20px;
+  font-size: 18px;
   font-style: italic;
-  display: inline-block;
-  float: right;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  margin-right: 20px;
+  margin-top: 40px;
+  margin-bottom: 0px;
 }
 
+h4 {
+  font-size: 20px;
+}
+
+textarea {
+  width: 100%;
+}
+
+ul.restos {
+/*   position: relative; */
+  margin-top: 0px;
+}
+
+ul.comments {
+  margin-top: 20px;
+}
 /* Footer */
 
 footer {

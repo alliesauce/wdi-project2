@@ -14,6 +14,7 @@ else
   conn = PG.connect(dbname: "mealpass_reviews")
 end
 
+conn.exec("DROP TABLE IF EXISTS contact_data")
 conn.exec("DROP TABLE IF EXISTS comments CASCADE")
 conn.exec("DROP TABLE IF EXISTS restaurants CASCADE")
 conn.exec("DROP TABLE IF EXISTS tags CASCADE")

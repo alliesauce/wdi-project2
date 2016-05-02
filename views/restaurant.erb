@@ -1,42 +1,38 @@
-<div class='half_box1'>
+<div>
   <% @restaurant.each do |place| %>
-    <h2><%= place ["restaurant_name"] %></h2>
+    <h2><%= place ["restaurant_name"] %></h2><br />
     <h3><%= place ["menu_item"] %></h3><br />
-      <ul class='restos'>
-        <li><%= place ["review"] %></li>
-        <li><%= place ["user_id"] %></li>
-        <li>tag placeholder</li>
-        <li>
-          <form class='like' action='/like' method='post'>
-            <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
-            <input name='likes' type='hidden' />
-            <input type='submit' value='Like!' />
-          </form>
-        </li>
-      </ul>
+    <p class='review'>
+      <%= place ["review"] %><br />
+      <em>-<%= @fname %></em><br />
+      <form class='like' action='/like' method='post'>
+        <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+        <input name='likes' type='hidden' />
+        <input type='submit' value='Like!' />
+      </form>
+    </p>
+
+
 
   <% end %>
 </div>
 
-<div class='half_box2'>
-<h2>Comments: </h2><br /><br />
+<div class='box'>
+<h4>Comments: </h4>
   <% @comments.each do |comm| %>
-  <ul class='restos'>
-    <li><%= comm ["comment"] %>, <em><%= comm ["user_id"] %></em></li>
+  <ul class='comments'>
+    <li><%= comm ["comment"] %><br />
+    -<em><%= @fname %></em></li>
   </ul>
   <% end %>
   <div class='box'>
-    <h3>Add your review to this menu item: </h3> <br />
+    <h4>Add your review to this menu item: </h4>
     <form class='comment' action='/comment' method='post'>
-      <label for='comment'>Comments: </label>
+      <!-- <label for='comment'>Comments: </label> -->
       <textarea name='comment'></textarea>
       <br />
     <!--   <label for='restaurant_id'>Restaurant ID: </label> -->
       <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
-      <br />
-      <!-- <label for='fname'>First Name: </label> -->
-      <input name='fname' value=' <%= @fname %>' type='hidden' />
-      <br />
       <input type='submit' value='Submit' />
       </form>
     </div>

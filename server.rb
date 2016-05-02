@@ -55,7 +55,7 @@ module Sinatra
     #VIEW DASHBOARD PAGE (list of restaurants("topics") and form to submit new restaurant)
     get "/dashboard" do
       @id = params[:id].to_i
-      @restaurants = conn.exec('SELECT * FROM restaurants')
+      @restaurants = conn.exec('SELECT * FROM restaurants ORDER BY restaurant_name ASC')
       if logged_in?
         erb :dashboard
        # binding pry
@@ -109,7 +109,7 @@ module Sinatra
 
     #SUBMITTING A NEW RESTAURANT (review or "topic")
     post "/review" do
-      @restaurant_name = params[:restaurant_name]
+      @restaurant_name = params[:restaurant_name].split.map(&:capitalize).join(" ")
       @menu_item = params[:menu_item]
       @review = params[:review]
       @user_id = current_user["id"]
@@ -123,22 +123,23 @@ module Sinatra
       # end
       #help from Marina's project two code on how to redirect to the entry you just made
       @new_review = conn.exec_params(
-        "INSERT INTO restaurants (restaurant_name, menu_item, review)
-        VALUES ($1, $2, $3) RETURNING id",
-        [@restaurant_name, @menu_item, @review]).first["id"].to_i
+        "INSERT INTO restaurants (restaurant_name, menu_item, review, user_id)
+        VALUES ($1, $2, $3, $4) RETURNING id",
+        [@restaurant_name, @menu_item, @review, @user_id]).first["id"].to_i
       # binding pry
-      redirect "/review/#{@new_review}"
+      # redirect "/review/#{@new_review}"
+      redirect "/dashboard"
     end
 
     #SUBMITTING A COMMENT ON A RESTAURANT
     post "/comment" do
       @comment = params[:comment]
       @restaurant_id = params[:restaurant_id].to_i
-      @user_id = params[:user_id]
-      @new_comment = conn.exec_params(
-        "INSERT INTO comments (comment) VALUES ($1) RETURNING id", [@comment]).first["id"].to_i
-      binding pry
-      redirect "/review/#{@new_comment}"
+      @user_id = current_user["id"]
+      conn.exec_params(
+        "INSERT INTO comments (comment, restaurant_id, user_id) VALUES ($1, $2, $3)", [@comment, @restaurant_id, @user_id])
+      # binding pry
+      redirect "/review/#{@restaurant_id}"
     end
 
     #SUBMITTING A CONTACT REQUEST
