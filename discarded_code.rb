@@ -79,3 +79,19 @@ remove_instance_variable  reset
         </li>
       </ul>
 
+
+              <ul class ='restos'>
+          <li><%= place["restaurant_name"] %>,
+          <%= place["menu_item"] %>,
+          <%= place["likes"] %>
+          </li>
+        </ul>
+
+
+<div class='tags'>
+      <%= @tags.each do |tag| %>
+        <ul>
+          <li><%= tag["tag"] %></li>
+        </ul>
+      <% end %>
+    </div>

@@ -20,6 +20,10 @@ module Sinatra
       ).first
     end
 
+    def current_fname
+      current_user["fname"]
+    end
+
     #MARKDOWN - not working yet
     def markdown
       renderer = Redcarpet::Render::HTML
@@ -56,6 +60,10 @@ module Sinatra
     get "/dashboard" do
       @id = params[:id].to_i
       @restaurants = conn.exec('SELECT * FROM restaurants ORDER BY restaurant_name ASC')
+      @restaurants_likes = conn.exec('SELECT * FROM restaurants ORDER BY likes DESC')
+      @comments = conn.exec('SELECT * FROM comments')
+      # binding pry
+      # @tags = conn.exec('SELECT * FROM tags')
       if logged_in?
         erb :dashboard
        # binding pry
@@ -67,10 +75,10 @@ module Sinatra
     #VIEW REVIEW PAGE (specific restaurant page and form to submit comment)
     get "/review/:id" do
       @id = params[:id].to_i
-      @restaurant = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
+      @restaurants = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
       @comments = conn.exec("SELECT * FROM comments WHERE restaurant_id = #{@id}")
-      @restaurant_id = @restaurant.to_a[0]['id'].to_i
-      @fname = current_user["fname"]
+      @restaurant_id = @restaurants.to_a[0]['id'].to_i
+      @restaurants_likes = conn.exec('SELECT * FROM restaurants ORDER BY likes DESC')
       # binding pry
       if logged_in?
         erb :restaurant
@@ -87,7 +95,7 @@ module Sinatra
       #add image/avatar thing??
       conn.exec_params(
         "INSERT INTO users (fname, email, password) VALUES ($1,$2,$3) RETURNING id", [@fname, @email, @encrPassword])
-      redirect "/dashboard"
+      redirect "/login"
     end
 
     #SUBMITTING LOGIN DETAILS
@@ -99,20 +107,22 @@ module Sinatra
         [@email]
       ).first
       if @user && BCrypt::Password::new(@user["password"]) == params[:password]
-        "You have successfully logged in."
         session[:user_id] = @user["id"]
         redirect "/dashboard"
       else
-        "Incorrect email or password!"
+        logged_in = false
+        redirect "/login"
       end
     end
 
     #SUBMITTING A NEW RESTAURANT (review or "topic")
     post "/review" do
       @restaurant_name = params[:restaurant_name].split.map(&:capitalize).join(" ")
-      @menu_item = params[:menu_item]
+      @menu_item = params[:menu_item].split.map(&:capitalize).join(" ")
       @review = params[:review]
       @user_id = current_user["id"]
+      @user_fname = current_fname
+      # binding pry
       #trying to get tags to work - not there yet
       # tags = db.exec_params("SELECT * FROM tags").to_a
       # @tags = []
@@ -123,9 +133,9 @@ module Sinatra
       # end
       #help from Marina's project two code on how to redirect to the entry you just made
       @new_review = conn.exec_params(
-        "INSERT INTO restaurants (restaurant_name, menu_item, review, user_id)
-        VALUES ($1, $2, $3, $4) RETURNING id",
-        [@restaurant_name, @menu_item, @review, @user_id]).first["id"].to_i
+        "INSERT INTO restaurants (restaurant_name, menu_item, review, user_id, user_fname)
+        VALUES ($1, $2, $3, $4, $5) RETURNING id",
+        [@restaurant_name, @menu_item, @review, @user_id, @user_fname]).first["id"].to_i
       # binding pry
       # redirect "/review/#{@new_review}"
       redirect "/dashboard"
@@ -136,8 +146,9 @@ module Sinatra
       @comment = params[:comment]
       @restaurant_id = params[:restaurant_id].to_i
       @user_id = current_user["id"]
+      @user_fname = current_fname
       conn.exec_params(
-        "INSERT INTO comments (comment, restaurant_id, user_id) VALUES ($1, $2, $3)", [@comment, @restaurant_id, @user_id])
+        "INSERT INTO comments (comment, restaurant_id, user_id, user_fname) VALUES ($1, $2, $3, $4)", [@comment, @restaurant_id, @user_id, @user_fname])
       # binding pry
       redirect "/review/#{@restaurant_id}"
     end

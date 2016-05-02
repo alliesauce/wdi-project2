@@ -1,42 +1,57 @@
-<div>
-  <% @restaurant.each do |place| %>
-    <h2><%= place ["restaurant_name"] %></h2><br />
-    <h3><%= place ["menu_item"] %></h3><br />
-    <p class='review'>
-      <%= place ["review"] %><br />
-      <em>-<%= @fname %></em><br />
-      <form class='like' action='/like' method='post'>
-        <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
-        <input name='likes' type='hidden' />
-        <input type='submit' value='Like!' />
-      </form>
-    </p>
-
-
-
-  <% end %>
-</div>
-
-<div class='box'>
-<h4>Comments: </h4>
-  <% @comments.each do |comm| %>
-  <ul class='comments'>
-    <li><%= comm ["comment"] %><br />
-    -<em><%= @fname %></em></li>
-  </ul>
-  <% end %>
-  <div class='box'>
-    <h4>Add your review to this menu item: </h4>
-    <form class='comment' action='/comment' method='post'>
-      <!-- <label for='comment'>Comments: </label> -->
-      <textarea name='comment'></textarea>
-      <br />
-    <!--   <label for='restaurant_id'>Restaurant ID: </label> -->
-      <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
-      <input type='submit' value='Submit' />
-      </form>
+<div class='row'>
+  <div class='nine columns'>
+    <% @restaurants.each do |place| %>
+      <h2><%= place ["restaurant_name"] %></h2><br />
+      <h3>Menu item: <%= place ["menu_item"] %></h3><br />
+      <p class='review'>
+        <%= place ["review"] %><br />
+        <span class='name'>-<%= place ["user_fname"] %></span><br />
+        <form class='like' action='/like' method='post'>
+          <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+          <input type='submit' value='Like!' />
+        </form>
+      </p>
+    <% end %>
+    <div class='box'>
+    <h4>Comments: </h4>
+      <% @comments.each do |comm| %>
+      <ul class='comments'>
+        <li><%= comm ["comment"] %>
+        <span class='name'>-<%= comm ["user_fname"] %></span></li>
+      </ul>
+      <% end %>
+      <div class='box'>
+        <h4>Add your review to this menu item: </h4>
+        <form class='comment' action='/comment' method='post'>
+          <!-- <label for='comment'>Comments: </label> -->
+          <textarea name='comment'></textarea>
+          <br />
+        <!--   <label for='restaurant_id'>Restaurant ID: </label> -->
+          <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+          <input type='submit' value='Submit' />
+          </form>
+        </div>
     </div>
+  </div>
+  <div class="three columns">
+    <div class="likes">
+      <table>
+        <tr class='header'>
+          <th colspan='2'>MOST LIKED RESTAURANTS</th>
+        </tr>
+        <% @restaurants_likes.each do |place| %>
+        <tr class='row'>
+          <td>
+            <a class='table' href="/review/<%= place ["id"] %>">
+            <%= place["restaurant_name"] %></a>, <%= place["menu_item"] %>
+          </td>
+          <td>
+            <%= place["likes"] %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
-
-
 

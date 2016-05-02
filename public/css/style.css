@@ -3,6 +3,14 @@
   color: darkcyan;
 }
 
+a:hover {
+  color: #003333;
+}
+
+li {
+  margin-top: 1rem;
+  margin-bottom: 0px;
+}
 div {
  /* /*  margin: auto;
   margin-top: 20px;*/
@@ -21,6 +29,10 @@ div.box {
   border-top: 3px solid paleturquoise;
 }
 
+form.review {
+  margin-top: 20px;
+}
+
 h1 {
   display: inline-block;
   margin-top: 20px;
@@ -34,32 +46,39 @@ h2 {
   display: inline-block;
   float: left;
   margin-top: 10px;
-  /* margin-bottom: 20px; */
+  margin-bottom: 0px;
 }
 
 h3 {
   font-size: 18px;
-  font-style: italic;
-  margin-top: 40px;
+/*   font-style: italic; */
+  margin-top: 25px;
   margin-bottom: 0px;
 }
 
 h4 {
+  margin-top: 20px;
   font-size: 20px;
+  margin-bottom: 0px;
 }
 
 textarea {
   width: 100%;
 }
 
-ul.restos {
-/*   position: relative; */
-  margin-top: 0px;
+span.name {
+  color: #CC0066;
+  font-style: italic;
 }
 
-ul.comments {
+/* div.restos {
+  position: relative;
   margin-top: 20px;
-}
+} */
+
+/* ul.comments {
+  margin-top: 20px;
+} */
 /* Footer */
 
 footer {
@@ -73,6 +92,10 @@ footer p {
 
 ul.footer_navigation {
   float: right;
+}
+
+ul.footer_navigation a {
+  padding: 6px;
 }
 
 ul.footer_navigation li {
@@ -124,4 +147,68 @@ header {
 }
 
 
+/*TABLE */
+table {
+  margin-top: 10px;
+}
+
+th {
+  border-bottom: 3px solid paleturquoise;
+  font-size: 12px;
+  font-weight: bolder;
+  /* padding: 0px; */
+}
+
+th:first-child, td:first-child, td:last-child {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+tr.row {
+  padding: 8px;
+  border-bottom: 0px;
+}
+
+td {
+  padding-left: 5px;
+  padding-right: 5px;
+  padding: 8px;
+  border-bottom: none;
+  font-size: 12px;
+}
+
+tr:hover {
+  background-color: darkcyan;
+  color: paleturquoise;
+}
+
+a.table {
+  text-decoration: none;
+/*   color: darkcyan; */
+}
+
+a.table:hover {
+  color: paleturquoise;
+}
+
+p.contact_submit {
+  margin-top: 50px;
+  height: 200px;
+  font-size: 20px;
+}
+
+input[type="submit"]:hover {
+  background-color: darkcyan;
+}
+
+input[type="email"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="url"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  border: 1px solid darkcyan;
+}
 

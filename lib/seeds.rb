@@ -22,7 +22,7 @@ conn.exec("DROP TABLE IF EXISTS users CASCADE")
 
 conn.exec("CREATE TABLE users(
   id SERIAL PRIMARY KEY,
-  fname VARCHAR(255) NOT NULL,
+  fname VARCHAR(255) NOT NULL UNIQUE,
   email VARCHAR NOT NULL,
   password VARCHAR NOT NULL
 )")
@@ -39,6 +39,7 @@ conn.exec("CREATE TABLE restaurants(
   review TEXT NOT NULL,
   likes INTEGER NOT NULL DEFAULT 0,
   user_id INTEGER REFERENCES users(id),
+  user_fname TEXT REFERENCES users(fname),
   tag_id INTEGER REFERENCES tags(id)
 )")
 
@@ -46,7 +47,8 @@ conn.exec("CREATE TABLE comments(
   id SERIAL PRIMARY KEY,
   comment TEXT NOT NULL,
   restaurant_id INTEGER REFERENCES restaurants(id),
-  user_id INTEGER REFERENCES users(id)
+  user_id INTEGER REFERENCES users(id),
+  user_fname TEXT REFERENCES users(fname)
   )")
 
 conn.exec("CREATE TABLE contact_data(
@@ -60,10 +62,10 @@ conn.exec("CREATE TABLE contact_data(
 
 
 #TEST DATA
-conn.exec_params("INSERT INTO users (fname, email, password) VALUES (
-    $1,$2,$3)", ['Alli', 'alli.cummings@gmail.com', 'p@ssword'])
+# conn.exec_params("INSERT INTO users (fname, email, password) VALUES (
+# #     $1,$2,$3)", ['Alli', 'alli.cummings@gmail.com', 'p@ssword'])
 
-conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Bianca', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])
+# conn.exec_params("INSERT INTO restaurants (restaurant_name, menu_item, review, user_id) VALUES ($1,$2,$3,$4)", ['La Pecora Bianca', 'Toscana Salad', 'real restaurant quality salad, great flavors, good if you love kale, but definitely a lighter meal',    1])
 #################
 
 tags = [

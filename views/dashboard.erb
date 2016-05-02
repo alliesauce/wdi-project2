@@ -1,44 +1,60 @@
-<div>
-  <% @restaurants.each do |place| %>
-    <ul>
-      <li><a href="/review/<%= place ["id"] %>">
-        <%= place["restaurant_name"] %></a>,
-        <%= place["menu_item"] %>,
-        <em><%= place["current_user"] %> </em>
-
-        , likes (x)
-        <!-- <ul>
-          <li>tag1</li>
-          <li>tag2</li>
-        </ul> -->
-      </li>
-    </ul>
-  <% end %>
+<div class="row">
+  <div class="nine columns">
+    <div class='restos'>
+      <h4>Reviewed meals: </h4>
+      <% @restaurants.each do |place| %>
+        <ul class ='restos'>
+          <li><a href="/review/<%= place ["id"] %>">
+            <%= place["restaurant_name"] %></a>,
+            <%= place["menu_item"] %>,
+            <span class='name'>reviewed by <%= place["user_fname"] %> </span>
+          </li>
+        </ul>
+      <% end %>
+    </div>
+    <div class='box'>
+      <h4>Review a new restaurant or menu item: </h4>
+        <form class='review' action='/review' method='post'>
+        <label for='restaurant_name'>Restaurant Name: </label>
+        <input name='restaurant_name' type='text' />
+        <br />
+        <label for='menu_item'>Menu Item: </label>
+        <input name='menu_item' type='text' />
+        <br />
+        <label for='review'>Review: </label>
+        <textarea name='review'></textarea>
+        <br />
+        <input type='submit' value='Submit' />
+      </form>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="likes">
+      <table>
+        <tr class='header'>
+          <th colspan='2'>MOST LIKED RESTAURANTS</th>
+        </tr>
+        <% @restaurants_likes.each do |place| %>
+        <tr class='row'>
+          <td>
+            <a class='table' href="/review/<%= place ["id"] %>">
+            <%= place["restaurant_name"] %></a>, <%= place["menu_item"] %>
+          </td>
+          <td>
+            <%= place["likes"] %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
 
-<div class='box'>
-  <h4>Review a new restaurant or menu item: </h4>
-    <form class='review' action='/review' method='post'>
-    <label for='restaurant_name'>Restaurant Name: </label>
-    <input name='restaurant_name' type='text' />
-    <br />
-    <label for='menu_item'>Menu Item: </label>
-    <input name='menu_item' type='text' />
-    <br />
-    <label for='review'>Review: </label>
-    <textarea name='review'></textarea>
-    <br />
-<!--try to set up hidden value of firstname based on current user
 
-<label for='user_id'>Username: </label>
-    <input name='user_id' type='text' />
-    <br />
-    <label for='tag_id'>Tag: </label>
-    <input name='tag_id' type='text' />
-    <br /> -->
-    <input type='submit' value='Submit' />
-  </form>
-</div>
+
+
+
+
 
 
 

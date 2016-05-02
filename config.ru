@@ -1,5 +1,4 @@
 require "bundler/setup"
-require "faker"
 require "pg"
 require "pry"
 require "sinatra/base"
