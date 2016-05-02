@@ -24,6 +24,9 @@ module Sinatra
       current_user["fname"]
     end
 
+    def correct_password
+    end
+
     #MARKDOWN - not working yet
     def markdown
       renderer = Redcarpet::Render::HTML
@@ -108,9 +111,10 @@ module Sinatra
       ).first
       if @user && BCrypt::Password::new(@user["password"]) == params[:password]
         session[:user_id] = @user["id"]
+        correct_password = true
         redirect "/dashboard"
       else
-        logged_in = false
+        correct_password = false
         redirect "/login"
       end
     end
