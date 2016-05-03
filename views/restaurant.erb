@@ -10,6 +10,10 @@
           <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
           <input type='submit' value='Like!' />
         </form>
+        <form class='dislike' action='/dislike' method='post'>
+          <input name='restaurant_id' value='<%= @restaurant_id %>' type='hidden' />
+          <input type='submit' value='Disike!' />
+        </form>
       </p>
     <% end %>
     <div class='box'>

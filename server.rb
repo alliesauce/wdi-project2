@@ -1,3 +1,5 @@
+#GEM use sanitize to protect against CSS injections
+
 module Sinatra
   require 'bcrypt'
   require 'pry'
@@ -27,12 +29,9 @@ module Sinatra
     def correct_password
     end
 
-    #MARKDOWN - not working yet
+    #MARKDOWN - Initialize Markdown Parser not working yet
     def markdown
-      renderer = Redcarpet::Render::HTML
-      # Initializes a Markdown parser
-      markdown = Redcarpet::Markdown.new(renderer, extensions = {})
-      @content = markdown.render(@article["content"])
+      markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML)
     end
 
     #VIEW LANDING PAGE, same as signup page
@@ -79,10 +78,10 @@ module Sinatra
     #VIEW REVIEW PAGE (specific restaurant page and form to submit comment)
     get "/review/:id" do
       @id = params[:id].to_i
-      @restaurants = conn.exec("SELECT * FROM restaurants WHERE id = #{@id}")
-      @comments = conn.exec("SELECT * FROM comments WHERE restaurant_id = #{@id}")
+      @restaurants = conn.exec_params("SELECT * FROM restaurants WHERE id = $1", [@id])
+      @comments = conn.exec_params("SELECT * FROM comments WHERE restaurant_id = $1", [@id])
       @restaurant_id = @restaurants.to_a[0]['id'].to_i
-      @restaurants_likes = conn.exec('SELECT * FROM restaurants ORDER BY likes DESC')
+      @restaurants_likes = conn.exec_params('SELECT * FROM restaurants ORDER BY likes DESC')
       # binding pry
       if logged_in?
         erb :restaurant
@@ -182,30 +181,40 @@ module Sinatra
       redirect "/review/#{@restaurant_id}"
     end
 
+    #DISLIKING a restaurant
+    post "/dislike" do
+      # binding pry
+      @likes = params[:likes].to_i
+      @restaurant_id = params[:restaurant_id].to_i
+      conn.exec_params("UPDATE restaurants SET likes = likes - 1 WHERE id = ($1)", [@restaurant_id])
+      # binding pry
+      redirect "/review/#{@restaurant_id}"
+    end
+
     #UNDEFINED ROUTES
-    put "/review/:id" do
-      erb :index
-    end
+    # put "/review/:id" do
+    #   erb :index
+    # end
 
-    put "/comment/:id" do
-      erb :index
-    end
+    # put "/comment/:id" do
+    #   erb :index
+    # end
 
-    get "profile/:id" do
-      erb :index
-    end
+    # get "profile/:id" do
+    #   erb :index
+    # end
 
-    put "profile/:id" do
-      erb :index
-    end
+    # put "profile/:id" do
+    #   erb :index
+    # end
 
-    delete "/review/:id" do
-      erb :index
-    end
+    # delete "/review/:id" do
+    #   erb :index
+    # end
 
-    delete "/comment/:id" do
-      erb :index
-    end
+    # delete "/comment/:id" do
+    #   erb :index
+    # end
     ###############
 
     #CODE TO CONNECT TO DATABASE
@@ -213,7 +222,7 @@ module Sinatra
 
     def conn
       if ENV["RACK_ENV"] == "production"
-        PG.connect(
+        @conn ||= PG.connect(
           dbname: ENV["POSTGRES_DB"], #ENV masks your variables for protection
           host: ENV["POSTGRES_HOST"],
           password: ENV["POSTGRES_PASS"],
